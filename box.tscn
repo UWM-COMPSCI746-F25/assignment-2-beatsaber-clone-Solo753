@@ -1,0 +1,29 @@
+[gd_scene load_steps=6 format=3 uid="uid://mus005shook5"]
+
+[ext_resource type="Script" uid="uid://bpfyf6lnfdcsh" path="res://box.gd" id="1_oq5cr"]
+[ext_resource type="Script" uid="uid://c4si81eayhuxr" path="res://hitbox.gd" id="2_bqn3j"]
+[ext_resource type="AudioStream" uid="uid://c8vwvb48eni1x" path="res://audio/thud-sound-effect-405470.mp3" id="3_bqn3j"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_bqn3j"]
+albedo_color = Color(0.956863, 0, 0, 1)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_kwl3w"]
+
+[node name="RedBox" type="Node3D"]
+transform = Transform3D(0.2, 0, 0, 0, 0.2, 0, 0, 0, 0.2, 0, 0, 0)
+script = ExtResource("1_oq5cr")
+
+[node name="evilBox" type="CSGBox3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.5, 0)
+material = SubResource("StandardMaterial3D_bqn3j")
+
+[node name="hitbox" type="Area3D" parent="." groups=["block", "block_red"]]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.5, 0)
+collision_layer = 2
+script = ExtResource("2_bqn3j")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="hitbox"]
+shape = SubResource("BoxShape3D_kwl3w")
+
+[node name="AudioStreamPlayer3D" type="AudioStreamPlayer3D" parent="."]
+stream = ExtResource("3_bqn3j")

@@ -1,0 +1,127 @@
+[gd_scene load_steps=22 format=3 uid="uid://0wwsa43nw1l3"]
+
+[ext_resource type="PackedScene" uid="uid://bc8lh0rihgxvi" path="res://assets/Quest2Controllers/Quest2Controllers/OculusQuest2TouchController_Right.gltf" id="1_fco1p"]
+[ext_resource type="Script" uid="uid://dlv360mr5qikn" path="res://beat_saber.gd" id="1_o8ya0"]
+[ext_resource type="AudioStream" uid="uid://c8vwvb48eni1x" path="res://audio/thud-sound-effect-405470.mp3" id="2_0sgi3"]
+[ext_resource type="PackedScene" uid="uid://cnwp7ndjr4s8y" path="res://assets/Quest2Controllers/Quest2Controllers/OculusQuest2TouchController_Left.gltf" id="2_o8ya0"]
+[ext_resource type="Script" uid="uid://v1e7gd3jg8rv" path="res://onOFF.gd" id="2_quh60"]
+[ext_resource type="Script" uid="uid://cdikxvmqgvi7b" path="res://collisionOnOffRight.gd" id="3_q2hc5"]
+[ext_resource type="Script" uid="uid://dd84ttqxgajtj" path="res://line_renderer_right.gd" id="4_7nrnd"]
+[ext_resource type="Script" uid="uid://3nidhcol787a" path="res://left.gd" id="5_higg6"]
+[ext_resource type="Script" uid="uid://c8bp8hsedoukd" path="res://collisionOnOff.gd" id="7_pwu7e"]
+[ext_resource type="Script" uid="uid://def8nayfe60bm" path="res://line_renderer_left.gd" id="7_t8qk7"]
+[ext_resource type="PackedScene" uid="uid://mus005shook5" path="res://box.tscn" id="10_q2hc5"]
+[ext_resource type="Script" uid="uid://crdn6qcjcxi8i" path="res://back_board.gd" id="11_pwu7e"]
+[ext_resource type="Script" uid="uid://cjehlq661p0r0" path="res://spawner.gd" id="12_pwu7e"]
+[ext_resource type="PackedScene" uid="uid://bxycu2bjtle28" path="res://blueBox.tscn" id="14_aigon"]
+
+[sub_resource type="CameraAttributesPractical" id="CameraAttributesPractical_n3cmh"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_n3cmh"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_quh60"]
+albedo_color = Color(1, 0, 0, 1)
+
+[sub_resource type="ImmediateMesh" id="ImmediateMesh_quh60"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_7nrnd"]
+albedo_color = Color(0, 0, 0.933333, 1)
+
+[sub_resource type="ImmediateMesh" id="ImmediateMesh_7nrnd"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_q2hc5"]
+size = Vector3(6, 6, 0.2)
+
+[node name="main" type="Node3D"]
+script = ExtResource("1_o8ya0")
+slice_sfx = ExtResource("2_0sgi3")
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+camera_attributes = SubResource("CameraAttributesPractical_n3cmh")
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="WorldEnvironment"]
+transform = Transform3D(1, 0, 0, 0, 0.881987, 0.471274, 0, -0.471274, 0.881987, 0, 0.467951, 1.04754)
+
+[node name="SpotLight3D" type="SpotLight3D" parent="WorldEnvironment"]
+transform = Transform3D(1, 0, 0, 0, -0.00492182, 0.999988, 0, -0.999988, -0.00492182, 0, 2.62164, 0)
+
+[node name="XROrigin3D" type="XROrigin3D" parent="."]
+
+[node name="Right" type="XRController3D" parent="XROrigin3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.248722, 0, 0)
+tracker = &"right_hand"
+script = ExtResource("2_quh60")
+
+[node name="RsaberHitbox" type="Area3D" parent="XROrigin3D/Right" groups=["saber"]]
+collision_mask = 2
+script = ExtResource("3_q2hc5")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="XROrigin3D/Right/RsaberHitbox" groups=["saber"]]
+shape = SubResource("BoxShape3D_n3cmh")
+
+[node name="OculusQuest2TouchController_Right" parent="XROrigin3D/Right" instance=ExtResource("1_fco1p")]
+transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 0, 0, 0)
+
+[node name="line renderer" type="MeshInstance3D" parent="XROrigin3D/Right" groups=["saber"]]
+material_override = SubResource("StandardMaterial3D_quh60")
+mesh = SubResource("ImmediateMesh_quh60")
+script = ExtResource("4_7nrnd")
+
+[node name="Left" type="XRController3D" parent="XROrigin3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.278817, 0, 0)
+tracker = &"left_hand"
+script = ExtResource("5_higg6")
+
+[node name="LsaberHitbox" type="Area3D" parent="XROrigin3D/Left" groups=["saber"]]
+collision_mask = 2
+script = ExtResource("7_pwu7e")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="XROrigin3D/Left/LsaberHitbox" groups=["saber"]]
+shape = SubResource("BoxShape3D_n3cmh")
+
+[node name="OculusQuest2TouchController_Left" parent="XROrigin3D/Left" instance=ExtResource("2_o8ya0")]
+transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 0, 0, 0)
+
+[node name="line renderer left" type="MeshInstance3D" parent="XROrigin3D/Left" groups=["saber"]]
+material_override = SubResource("StandardMaterial3D_7nrnd")
+mesh = SubResource("ImmediateMesh_7nrnd")
+script = ExtResource("7_t8qk7")
+
+[node name="XRCamera3D" type="XRCamera3D" parent="XROrigin3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 1.36784)
+
+[node name="AudioListener3D" type="AudioListener3D" parent="XROrigin3D/XRCamera3D"]
+current = true
+
+[node name="RedBox" parent="XROrigin3D" instance=ExtResource("10_q2hc5")]
+transform = Transform3D(0.2, 0, 0, 0, 0.2, 0, 0, 0, 0.2, -0.0140555, 0, -4.54592)
+visible = false
+
+[node name="BlueBox" parent="XROrigin3D" instance=ExtResource("10_q2hc5")]
+transform = Transform3D(0.2, 0, 0, 0, 0.2, 0, 0, 0, 0.2, -0.0140555, 0, -4.54592)
+visible = false
+
+[node name="backBoard" type="Area3D" parent="XROrigin3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 5)
+collision_layer = 8
+collision_mask = 2
+script = ExtResource("11_pwu7e")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="XROrigin3D/backBoard"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 2.55267)
+shape = SubResource("BoxShape3D_q2hc5")
+
+[node name="spawner" type="Node3D" parent="."]
+script = ExtResource("12_pwu7e")
+camera_path = NodePath("../XROrigin3D/XRCamera3D")
+controller_path = NodePath("../XROrigin3D/Right")
+red_box_scene = ExtResource("10_q2hc5")
+blue_box_scene = ExtResource("14_aigon")
+
+[connection signal="button_pressed" from="XROrigin3D/Right" to="XROrigin3D/Right" method="_on_button_pressed"]
+[connection signal="button_pressed" from="XROrigin3D/Right" to="XROrigin3D/Right/line renderer" method="_on_right_button_pressed"]
+[connection signal="visibility_changed" from="XROrigin3D/Right/line renderer" to="XROrigin3D/Right/RsaberHitbox" method="_on_line_renderer_visibility_changed"]
+[connection signal="visibility_changed" from="XROrigin3D/Right/line renderer" to="XROrigin3D/Right/line renderer" method="_on_visibility_changed"]
+[connection signal="button_pressed" from="XROrigin3D/Left" to="XROrigin3D/Left" method="_on_button_pressed"]
+[connection signal="button_pressed" from="XROrigin3D/Left" to="XROrigin3D/Left/line renderer left" method="_on_left_button_pressed"]
+[connection signal="visibility_changed" from="XROrigin3D/Left/line renderer left" to="XROrigin3D/Left/LsaberHitbox" method="_on_line_renderer_left_visibility_changed"]

@@ -1,0 +1,37 @@
+; Engine configuration file.
+; It's best edited using the editor UI and not directly,
+; since the parameters that go here are not all obvious.
+;
+; Format:
+;   [section] ; section goes between []
+;   param=value ; assign values to parameters
+
+config_version=5
+
+[application]
+
+config/name="Beat Saber"
+run/main_scene="uid://0wwsa43nw1l3"
+config/features=PackedStringArray("4.4", "Forward Plus")
+config/icon="res://icon.svg"
+
+[input]
+
+toggle_left_laser={
+"deadzone": 0.2,
+"events": []
+}
+toggle_right_laser={
+"deadzone": 0.2,
+"events": []
+}
+
+[rendering]
+
+textures/vram_compression/import_etc2_astc=true
+
+[xr]
+
+openxr/enabled=true
+openxr/default_action_map="uid://k2rnu443vwjt"
+shaders/enabled=true
